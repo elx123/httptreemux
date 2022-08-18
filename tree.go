@@ -247,9 +247,12 @@ func (n *node) search(method, path string) (found *node, handler HandlerFunc, pa
 	// First see if this matches a static token.
 	firstChar := path[0]
 	for i, staticIndex := range n.staticIndices {
+		//这里我们能理解所有静态路径都是存储于staticChild
+		//查询子节点从首字母开始
 		if staticIndex == firstChar {
 			child := n.staticChild[i]
 			childPathLen := len(child.path)
+			//这里的逻辑是target path已经搜索到底了,当前的这个节点已经是leaf节点,直接break出循环
 			if pathLen >= childPathLen && child.path == path[:childPathLen] {
 				nextPath := path[childPathLen:]
 				found, handler, params = child.search(method, nextPath)

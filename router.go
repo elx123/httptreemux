@@ -136,7 +136,7 @@ func (t *TreeMux) lookup(w http.ResponseWriter, r *http.Request) (result LookupR
 		path = path[:pathLen-1]
 		unescapedPath = unescapedPath[:len(unescapedPath)-1]
 	}
-
+	//这里的逻辑是先查一遍escapedPath,然后再查unescapedPath,有2个search
 	n, handler, params := t.root.search(r.Method, path[1:])
 	if n == nil {
 		if t.RedirectCleanPath {
