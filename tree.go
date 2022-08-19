@@ -231,7 +231,7 @@ func (n *node) splitCommonPrefix(existingNodeIndex int, path string) (*node, int
 	return newNode, i
 }
 
-// 这里leaf node可能也会存path,但是在search的时候到达leaf node的时候path会为空
+// 这里leaf node可能也会存path,但是在search的时候到达leaf node的时候path会为空，这里的path指代search path
 func (n *node) search(method, path string) (found *node, handler HandlerFunc, params []string) {
 	// if test != nil {
 	// 	test.Logf("Searching for %s in %s", path, n.dumpTree("", ""))
