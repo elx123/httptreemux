@@ -33,6 +33,7 @@ type node struct {
 	leafWildcardNames []string
 }
 
+// 这里简单的看出来是降序排序
 func (n *node) sortStaticChild(i int) {
 	for i > 0 && n.staticChild[i].priority > n.staticChild[i-1].priority {
 		n.staticChild[i], n.staticChild[i-1] = n.staticChild[i-1], n.staticChild[i]
@@ -165,6 +166,7 @@ func (n *node) addPath(path string, wildcards []string, inStaticToken bool) *nod
 			if c == index {
 				// Yes. Split it based on the common prefix of the existing
 				// node and the new one.
+				//这里prefix返回的是公共节点也就是commonPrefix
 				child, prefixSplit := n.splitCommonPrefix(i, thisToken)
 
 				child.priority++
@@ -193,7 +195,7 @@ func (n *node) addPath(path string, wildcards []string, inStaticToken bool) *nod
 
 func (n *node) splitCommonPrefix(existingNodeIndex int, path string) (*node, int) {
 	childNode := n.staticChild[existingNodeIndex]
-
+	//这里将比如abcd,abc这样的例子剩下的d 交给上一层的addpath处理,也就是最终还会将d转入这一层
 	if strings.HasPrefix(path, childNode.path) {
 		// No split needs to be done. Rather, the new path shares the entire
 		// prefix with the existing node, so the new node is just a child of
@@ -202,7 +204,8 @@ func (n *node) splitCommonPrefix(existingNodeIndex int, path string) (*node, int
 		// this return accomplishes that
 		return childNode, len(childNode.path)
 	}
-
+	//比方说abcd,abd
+	//之后将原有的节点添加到新节点之后，原有的path中的节点比如cd就返回
 	var i int
 	// Find the length of the common prefix of the child node and the new path.
 	for i = range childNode.path {
