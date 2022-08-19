@@ -179,7 +179,7 @@ func (n *node) addPath(path string, wildcards []string, inStaticToken bool) *nod
 
 		// No existing node starting with this letter, so create it.
 		child := &node{path: thisToken}
-
+		//从这里可以看出handler是存于leaf节点中
 		if n.staticIndices == nil {
 			n.staticIndices = []byte{c}
 			n.staticChild = []*node{child}
@@ -231,6 +231,7 @@ func (n *node) splitCommonPrefix(existingNodeIndex int, path string) (*node, int
 	return newNode, i
 }
 
+// 这里leaf node可能也会存path,但是在search的时候到达leaf node的时候path会为空
 func (n *node) search(method, path string) (found *node, handler HandlerFunc, params []string) {
 	// if test != nil {
 	// 	test.Logf("Searching for %s in %s", path, n.dumpTree("", ""))
@@ -255,6 +256,7 @@ func (n *node) search(method, path string) (found *node, handler HandlerFunc, pa
 			//这里的逻辑是target path已经搜索到底了,当前的这个节点已经是leaf节点,直接break出循环
 			if pathLen >= childPathLen && child.path == path[:childPathLen] {
 				nextPath := path[childPathLen:]
+				//这里首先匹配首字母,然后直接匹配path
 				found, handler, params = child.search(method, nextPath)
 			}
 			break
