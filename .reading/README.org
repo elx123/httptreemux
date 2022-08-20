@@ -1,3 +1,7 @@
 * 总结下search和addpath中对于 ： 通配符的逻辑
 首先addpath将所有的 形参存于 leaf node
 然后search是和addpath是对应的, 将每一层的path，也就是实参结果放入数组
+* 细节
+在处理catch的时候
+比如/image/*path 那么会同时存一个wildchild和catchallChild
+而如果没有是/abc/* 不会存wildchild 只会存一个catchallchild 空
