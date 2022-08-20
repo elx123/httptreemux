@@ -8,6 +8,7 @@ import (
 type node struct {
 	path string
 
+	//这个属性是用来描述子节点的数量,简而言之也就是当前节点下,有多少个子节点,包含子节点下的子节点
 	priority int
 
 	// The list of static children to check.
@@ -57,6 +58,8 @@ func (n *node) setHandler(verb string, handler HandlerFunc, implicitHead bool) {
 	}
 }
 
+// inStaticToken这个变量很迷,写死的有啥用
+// wildcards虽然这个变量在上一层中没有使用，但是在递归调用中使用了
 func (n *node) addPath(path string, wildcards []string, inStaticToken bool) *node {
 	leaf := len(path) == 0
 	if leaf {
@@ -101,6 +104,7 @@ func (n *node) addPath(path string, wildcards []string, inStaticToken bool) *nod
 		tokenEnd = nextSlash
 	}
 	remainingPath := path[tokenEnd:]
+	//这个remainingPath会交给最后处理,依然是一个新的结节
 
 	if c == '*' && !inStaticToken {
 		// Token starts with a *, so it's a catch-all
@@ -175,6 +179,7 @@ func (n *node) addPath(path string, wildcards []string, inStaticToken bool) *nod
 					// Account for the removed backslash.
 					prefixSplit++
 				}
+				//这里prefixSplit是重点,因为刨去CommonPrefix这个节点,还剩下path[prefixSplit:],依然做addpath逻辑
 				return child.addPath(path[prefixSplit:], wildcards, inStaticToken)
 			}
 		}
@@ -219,7 +224,7 @@ func (n *node) splitCommonPrefix(existingNodeIndex int, path string) (*node, int
 
 	commonPrefix := path[0:i]
 	childNode.path = childNode.path[i:]
-
+	//原先的path 改为childNode.path[i:],比如apple改为le
 	// Create a new intermediary node in the place of the existing node, with
 	// the existing node as a child.
 	newNode := &node{

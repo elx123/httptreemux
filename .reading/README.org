@@ -1,0 +1,3 @@
+* 总结下search和addpath中对于 ： 通配符的逻辑
+首先addpath将所有的 形参存于 leaf node
+然后search是和addpath是对应的, 将每一层的path，也就是实参结果放入数组
