@@ -58,8 +58,9 @@ func (n *node) setHandler(verb string, handler HandlerFunc, implicitHead bool) {
 	}
 }
 
-// inStaticToken这个变量很迷,写死的有啥用
 // wildcards虽然这个变量在上一层中没有使用，但是在递归调用中使用了
+// inStaticToken同样
+// 目前看inStaticToken是为了区分*和：
 func (n *node) addPath(path string, wildcards []string, inStaticToken bool) *node {
 	leaf := len(path) == 0
 	if leaf {
@@ -150,7 +151,7 @@ func (n *node) addPath(path string, wildcards []string, inStaticToken bool) *nod
 		// if strings.ContainsAny(thisToken, ":*") {
 		// 	panic("* or : in middle of path component " + path)
 		// }
-
+		//这里逻辑是作者自己加的，也可以理解为作者二次开发
 		unescaped := false
 		if len(thisToken) >= 2 && !inStaticToken {
 			if thisToken[0] == '\\' && (thisToken[1] == '*' || thisToken[1] == ':' || thisToken[1] == '\\') {
