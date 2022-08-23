@@ -60,7 +60,7 @@ func (n *node) setHandler(verb string, handler HandlerFunc, implicitHead bool) {
 
 // wildcards虽然这个变量在上一层中没有使用，但是在递归调用中使用了
 // inStaticToken同样
-// 目前看inStaticToken是为了区分*和：
+// 目前看inStaticToken是为了单独给/一个节点
 func (n *node) addPath(path string, wildcards []string, inStaticToken bool) *node {
 	leaf := len(path) == 0
 	if leaf {

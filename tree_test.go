@@ -20,6 +20,10 @@ func addPath(t *testing.T, tree *node, path string) {
 
 var test *testing.T
 
+// 对于Params是如何获取的,首先根据path从 search搜索,获取实参slice
+// 再从对应的leaf node中获取对应的map,注意这个index对应关系
+// params[n.leafWildcardNames[len(paramList)-i-1]] = paramList[i]
+// 最后将params中的key，value与expectedParams一一比较
 func testPath(t *testing.T, tree *node, path string, expectPath string, expectedParams map[string]string) {
 	if t.Failed() {
 		t.Log(tree.dumpTree("", " "))
