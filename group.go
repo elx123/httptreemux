@@ -17,6 +17,7 @@ func handlerWithMiddlewares(handler HandlerFunc, stack []MiddlewareFunc) Handler
 	return handler
 }
 
+// 我理解就是实现rest ful api中group的概念
 type Group struct {
 	path  string
 	mux   *TreeMux
