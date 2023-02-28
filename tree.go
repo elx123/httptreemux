@@ -43,6 +43,7 @@ func (n *node) sortStaticChild(i int) {
 	}
 }
 
+// prefix tree mux 在leaf 上存 handler
 func (n *node) setHandler(verb string, handler HandlerFunc, implicitHead bool) {
 	if n.leafHandler == nil {
 		n.leafHandler = make(map[string]HandlerFunc)
