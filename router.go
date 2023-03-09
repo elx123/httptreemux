@@ -254,6 +254,7 @@ func (t *TreeMux) ServeLookupResult(w http.ResponseWriter, r *http.Request, lr L
 	}
 }
 
+//核心method 同时生成result.Params 用来查询
 func (t *TreeMux) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 	if t.PanicHandler != nil {
 		defer t.serveHTTPPanic(w, r)
