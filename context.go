@@ -11,6 +11,9 @@ import (
 // ContextGroup is a wrapper around Group, with the purpose of mimicking its API, but with the use of http.HandlerFunc-based handlers.
 // Instead of passing a parameter map via the handler (i.e. httptreemux.HandlerFunc), the path parameters are accessed via the request
 // object's context.
+// ContextGroup 是 Group 的包装器，目的是模仿 Group 的 API，但使用了基于 http.HandlerFunc 的处理程序。
+// 与通过处理程序（即 httptreemux.HandlerFunc）传递参数映射不同，路径参数通过请求的
+// 对象的上下文访问路径参数。
 type ContextGroup struct {
 	group *Group
 }

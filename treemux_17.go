@@ -96,6 +96,7 @@ func (t *TreeMux) setDefaultRequestContext(r *http.Request) *http.Request {
 	return r
 }
 
+// 这里有点绕,初看不怎么理解,简单来说就是通过构造treemux,然后利用treemux 再构造contextgroup
 type ContextMux struct {
 	*TreeMux
 	*ContextGroup
@@ -105,6 +106,7 @@ type ContextMux struct {
 // Handler functions and context objects.
 func NewContextMux() *ContextMux {
 	mux := New()
+	//embed struct 也会分配内存
 	cg := mux.UsingContext()
 
 	return &ContextMux{
