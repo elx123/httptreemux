@@ -17,7 +17,8 @@ func handlerWithMiddlewares(handler HandlerFunc, stack []MiddlewareFunc) Handler
 	return handler
 }
 
-// 我理解就是实现rest ful api中group的概念
+// 我理解就是实现rest ful api中group的概念,
+// <2024-09-14 Sat> 并不是简单的group概念,我们可以把treemux看作是核心算法,也就是前缀树, 而Group是围绕核心搭建的脚手架
 type Group struct {
 	path  string
 	mux   *TreeMux
