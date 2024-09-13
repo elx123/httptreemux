@@ -77,6 +77,8 @@ func (cg *ContextGroup) wrapHandler(path string, handler HandlerFunc) HandlerFun
 
 // Handle allows handling HTTP requests via an http.HandlerFunc, as opposed to an httptreemux.HandlerFunc.
 // Any parameters from the request URL are stored in a map[string]string in the request's context.
+// Handle 允许通过 http.HandlerFunc 处理 HTTP 请求，而不是 httptreemux.HandlerFunc。
+// 请求 URL 中的任何参数都会存储在请求上下文中的 map[string]string 中。
 func (cg *ContextGroup) Handle(method, path string, handler http.HandlerFunc) {
 	cg.group.mux.mutex.Lock()
 	defer cg.group.mux.mutex.Unlock()
@@ -90,6 +92,8 @@ func (cg *ContextGroup) Handle(method, path string, handler http.HandlerFunc) {
 
 // Handler allows handling HTTP requests via an http.Handler interface, as opposed to an httptreemux.HandlerFunc.
 // Any parameters from the request URL are stored in a map[string]string in the request's context.
+// 处理程序允许通过 http.Handler 接口处理 HTTP 请求，而不是 httptreemux.HandlerFunc 接口。
+// 请求 URL 中的任何参数都会存储在请求上下文中的 map[string]string 中。
 func (cg *ContextGroup) Handler(method, path string, handler http.Handler) {
 	cg.group.mux.mutex.Lock()
 	defer cg.group.mux.mutex.Unlock()
